@@ -1,0 +1,4 @@
+---
+# defaults file for wordpress
+  wordpress_tar_url: 'https://wordpress.org/latest.tar.gz'
+  wordpress_unarchive_path: '/var/www'

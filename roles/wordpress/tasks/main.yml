@@ -1,0 +1,32 @@
+- name: Download WordPress tar file
+  get_url:
+    url: '{{ wordpress_tar_url }}'
+    dest: /var/www/latest.tar.gz
+  become: true
+
+- name: Extract Wordpress tar file
+  unarchive:
+    src: /var/www/latest.tar.gz
+    dest: '{{ wordpress_unarchive_path }}'
+    remote_src: true
+  become: true
+
+- name: Change "wordpress" owner to "www-data"
+  file:
+    path: '{{ wordpress_unarchive_path }}/wordpress'
+    owner: www-data
+    group: www-data
+    recurse: true
+  become: true
+
+- name: Remove "latest.tar.gz" file
+  file:
+    path: /var/www/latest.tar.gz
+    state: absent
+  become: true
+
+#- name: Move wp-config.php config template
+  #template:
+    #src: 'wp-config.php.j2'
+    #dest: '{{ wordpress_unarchive_path }}/wordpress/wp-config.php'
+  #become: true

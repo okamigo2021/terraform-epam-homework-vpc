@@ -1,0 +1,29 @@
+- name: 'Install nginx php-fpm'
+  apt:
+    name: 
+      - 'nginx'
+      - 'php-fpm'
+      - 'php-mysql'
+    state: 'present'
+    update_cache: true
+  become: true
+
+- name: 'Move nginx.conf.j2 template to sites-available'
+  template:
+    src: 'nginx.conf.j2'
+    dest: '/etc/nginx/sites-available/wordpress.conf'
+  become: true
+
+- name: 'Remove default symlink'
+  file:
+    path: '/etc/nginx/sites-enabled/default'
+    state: 'absent'
+  become: true
+
+- name: 'Create symlink to the wordpress app config'
+  file:
+    src: '/etc/nginx/sites-available/wordpress.conf'
+    dest: '/etc/nginx/sites-enabled/default'
+    state: link
+  become: true
+  notify: 'Restart nginx'

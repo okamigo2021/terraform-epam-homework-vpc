@@ -69,10 +69,10 @@ data "template_file" "config" {
     }
 }
 
-resource "local_file" "update_ssh_config" {
-  content  = "${data.template_file.config.rendered}"
-  filename = "/root/.ssh/config"
-}
+#resource "local_file" "update_ssh_config" {
+  #content  = "${data.template_file.config.rendered}"
+  #filename = "/root/.ssh/config"
+#}
 
 ### The Ansible inventory file
 resource "local_file" "AnsibleInventory" {

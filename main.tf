@@ -87,9 +87,9 @@ resource "local_file" "AnsibleInventory" {
 }
 
 resource "null_resource" "ansible_automation" {
-  #triggers = {
-    #build_number = "${timestamp()}"
-    #}
+  triggers = {
+    build_number = "${timestamp()}"
+    }
 
   provisioner "local-exec" {
     command = "ansible-playbook -i ./ansible/inventory play.yml"
